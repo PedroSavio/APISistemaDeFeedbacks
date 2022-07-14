@@ -1,4 +1,4 @@
-import { SendMailData, Mail } from "../mailer-mail";
+import { IMailProvider, IRequestMail } from '../../IMailProvider';
 import nodemailer from 'nodemailer'
 
 const transport = nodemailer.createTransport({
@@ -11,11 +11,17 @@ const transport = nodemailer.createTransport({
 });
 
 //Inversao de dependenca SOLID
-export class NodemailerMailerMail implements Mail {
-    async sendMail({subject, body} : SendMailData) {
+export class NodemailerMailerMail implements IMailProvider {
+    async sendMail({
+        to,
+        from,
+        subject,
+        body, 
+    } : IRequestMail) 
+    {
         await transport.sendMail({
-            from: 'Email TestApi <apiTest@feedget.com>',
-            to: 'Savio <saviokbca@gmail.com',
+            from: `${from.name} <${from.email}>`,
+            to: `${to.name} <${to.email}>`,
             subject,
             html: body,
         })
