@@ -11,7 +11,7 @@ export interface SubmitFeedbackUseCaseRequest {
 export class SubmitFeedbackUseCase {
     constructor(
         private feedbacksRepository: FeedbacksRepository,
-        private nodeMailer: NodemailerMailerMail
+        private mailProvider: NodemailerMailerMail
     ) { }
 
     async execute(request: SubmitFeedbackUseCaseRequest) {
@@ -35,7 +35,7 @@ export class SubmitFeedbackUseCase {
             screenschot,
         })
 
-        await this.nodeMailer.sendMail({
+        await this.mailProvider.sendMail({
             subject: 'Novo feedback',
             body: [
                 `<div style="font-family: sans-serif; font-size: 16px; color: #111;" >`,
