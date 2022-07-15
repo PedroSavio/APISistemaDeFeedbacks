@@ -5,12 +5,12 @@ const createFeedbackSpy = jest.fn()
 const sendMailSpy = jest.fn()
 
 const submitFeedback = new SubmitFeedbackUseCase(
-    {create: async () => {createFeedbackSpy}},
-    {sendMail: async () => {sendMailSpy}}
+    { create: async () => { createFeedbackSpy } },
+    { sendMail: async () => { sendMailSpy } }
 )
 
 describe('Submit feedback', () => {
-    it('Should be able to submit a feedback', async () =>{
+    it('Should be able to submit a feedback', async () => {
         await expect(submitFeedback.execute({
             type: 'BUG',
             comment: 'example comment',
@@ -18,28 +18,28 @@ describe('Submit feedback', () => {
         })).resolves.not.toThrow()
     });
 
-    it('Should be able to submit a feedback without type', async () =>{
+    it('Should be able to submit a feedback without type', async () => {
         await expect(submitFeedback.execute({
             type: '',
             comment: 'example comment',
             screenschot: 'data:image/png;base64, teste teste'
-        })).resolves.toThrow()
+        })).rejects.toThrow()
     });
 
-    it('Should be able to submit a feedback without comment', async () =>{
+    it('Should be able to submit a feedback without comment', async () => {
         await expect(submitFeedback.execute({
             type: 'BUG',
-            comment: 'example comment',
+            comment: '',
             screenschot: 'data:image/png;base64, teste teste'
-        })).resolves.toThrow()
+        })).rejects.toThrow()
     });
 
-    it('Should be able to submit a feedback with an invalid screenshot', async () =>{
+    it('Should be able to submit a feedback with an invalid screenshot', async () => {
         await expect(submitFeedback.execute({
             type: 'BUG',
             comment: 'example comment',
             screenschot: 'teste unit'
-        })).resolves.toThrow()
+        })).rejects.toThrow()
     });
 });
 

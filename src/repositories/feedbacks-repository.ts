@@ -5,5 +5,5 @@ export interface FeedbacksCreateData {
 }
 
 export interface FeedbacksRepository {
-    create: (data: FeedbacksCreateData) => Promise<void>;
+    create: (feedbackInfo: FeedbacksCreateData) => Promise<void>
 }
